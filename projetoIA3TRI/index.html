@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ONEIROS: plataforma futurista para registrar, organizar e analisar sonhos.">
+  <meta name="theme-color" content="#03050b">
+  <title>ONEIROS · Dream Manager</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="fx" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="logo">ONEIROS<span>DREAM OS · v2.5</span></div>
+    <nav class="tabs" aria-label="Navegação principal">
+      <button class="tab active" type="button" data-target="dashboard">Painel</button>
+      <button class="tab" type="button" data-target="registrar">Registrar</button>
+      <button class="tab" type="button" data-target="arquivo">Arquivo</button>
+      <button class="tab" type="button" data-target="analise">Análise</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="dashboard" class="view active">
+      <div class="hero glass">
+        <p class="eyebrow">Arquivo onírico</p>
+        <h1>Sua mente, <em>catalogada.</em></h1>
+        <p class="muted">Cada sonho é um dado. Juntos, revelam padrões.</p>
+        <div class="stats">
+          <div class="stat"><strong id="stat-total">0</strong><span>Sonhos registrados</span></div>
+          <div class="stat"><strong id="stat-lucid">0%</strong><span>Lúcidos</span></div>
+          <div class="stat"><strong id="stat-clarity">—</strong><span>Clareza média</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="demo-btn" type="button">Carregar demonstração</button>
+          <button class="btn danger" id="clear-btn" type="button">Apagar tudo</button>
+        </div>
+      </div>
+      <div class="glass">
+        <h2>Atividade · últimos 14 dias</h2>
+        <div class="heatmap" id="heatmap" role="img" aria-label="Sonhos registrados nos últimos 14 dias"></div>
+        <p class="caption muted">Mais recente à direita.</p>
+      </div>
+    </section>
+
+    <section id="registrar" class="view">
+      <form class="glass form" id="dream-form" autocomplete="off">
+        <h2 class="full">Novo registro</h2>
+        <label class="full">Título do sonho
+          <input id="f-title" required maxlength="80" placeholder="Ex.: Cidade flutuante">
+        </label>
+        <label>Data <input type="date" id="f-date" required></label>
+        <label>Categoria <select id="f-category"></select></label>
+        <label>Emoção dominante <select id="f-emotion"></select></label>
+        <label>Clareza: <output id="clarity-out">5</output>/10
+          <input type="range" id="f-clarity" min="0" max="10" value="5">
+        </label>
+        <label class="full">Descrição
+          <textarea id="f-text" placeholder="O que você viu, ouviu, sentiu?"></textarea>
+        </label>
+        <div class="full"><button class="btn primary" type="submit">Registrar sonho</button></div>
+      </form>
+    </section>
+
+    <section id="arquivo" class="view">
+      <div class="glass">
+        <h2>Arquivo de sonhos</h2>
+        <div class="filters">
+          <input type="search" id="search" placeholder="Buscar em títulos e descrições…" aria-label="Buscar sonhos">
+          <select id="filter-category" aria-label="Filtrar por categoria"></select>
+        </div>
+        <div class="list" id="list"></div>
+        <p class="empty muted" id="empty" hidden>Nenhum sonho encontrado. Registre um novo ou carregue a demonstração.</p>
+      </div>
+    </section>
+
+    <section id="analise" class="view">
+      <p class="glass muted empty" id="analysis-empty" hidden>Registre pelo menos 3 sonhos para liberar a análise de padrões.</p>
+      <div id="analysis-body" class="stack">
+        <div class="metrics">
+          <div class="glass metric"><span>Categoria dominante</span><strong id="m-cat">—</strong></div>
+          <div class="glass metric"><span>Dia mais ativo</span><strong id="m-day">—</strong></div>
+          <div class="glass metric"><span>Emoção dominante</span><strong id="m-emo">—</strong></div>
+        </div>
+        <div class="glass">
+          <h2>Insight</h2>
+          <p class="insight" id="insight"></p>
+        </div>
+        <div class="two">
+          <div class="glass"><h2>Territórios</h2><div id="cat-bars"></div></div>
+          <div class="glass"><h2>Palavras recorrentes</h2><div class="chips" id="words"></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
